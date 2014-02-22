@@ -1,7 +1,7 @@
 package com.gopivotal.com.hh;
 
-import com.gopivotal.com.hh.dao.Payload;
-import com.gopivotal.com.hh.dao.PayloadDAO;
+import com.gopivotal.poc.hh.dao.Payload;
+import com.gopivotal.poc.hh.dao.PayloadDAO;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
