@@ -56,6 +56,13 @@ public class JdbcPayloadDAO implements PayloadDAO {
                     //NOTHING TO DO
                 }
             }
+            if(conn!=null){
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    LOG.error(">>>>>>Error closing connection<<<<<", e);
+                }
+            }
         }
 
         LOG.debug("single payload inserted.",this);
@@ -101,13 +108,13 @@ public class JdbcPayloadDAO implements PayloadDAO {
                     //NOTHING TO DO
                 }
             }
-            if(conn!=null){
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    //NOTHING TO DO
-                }
-            }
+//            if(conn!=null){
+//                try {
+//                    conn.close();
+//                } catch (SQLException e) {
+//                    LOG.error(">>>>>>Error closing connection<<<<<", e);
+//                }
+//            }
 
         }
 

@@ -5,6 +5,8 @@ import com.gopivotal.poc.hh.dao.PayloadDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+
 @Component
 public class HitService {
 
@@ -12,9 +14,10 @@ public class HitService {
     private PayloadDAO payloadDAO;
 
     public long hit(int batchSize) {
-        long time = 0;
+        long startTime = System.currentTimeMillis();
         Payload[] payloads = Payload.generatePayloads(batchSize);
         payloadDAO.insertBatch(payloads);
-        return time;
+        long finalTime = System.currentTimeMillis();
+        return (finalTime - startTime);
     }
 }
