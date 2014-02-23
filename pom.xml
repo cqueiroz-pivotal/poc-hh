@@ -111,7 +111,7 @@
             <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>DataLoader</mainClass>
+                        <mainClass>com.gopivotal.poc.hh.HHApp</mainClass>
                     </manifest>
                 </archive>
                 <descriptorRefs>

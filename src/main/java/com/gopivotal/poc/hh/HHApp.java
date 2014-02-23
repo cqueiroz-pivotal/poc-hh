@@ -65,7 +65,7 @@ public class HHApp {
         LOG.info("Batch size: " + batchSize);
         LOG.info("Experiments: " + nExperiments);
 
-        final Stats stats = new Stats(nThreads,batchSize,nTransactions);
+        final Stats stats = new Stats(nThreads,batchSize,nTransactions,nExperiments);
 
 
         for(int i = 0 ; i < nExperiments; i++){

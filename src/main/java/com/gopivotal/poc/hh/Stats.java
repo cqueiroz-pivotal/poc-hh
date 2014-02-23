@@ -24,6 +24,7 @@ public class Stats {
     private final int nTransactions;
 
     private final int batchSize;
+    private final int nExperiments;
 
     private final SimpleDateFormat sdf;
 
@@ -31,10 +32,11 @@ public class Stats {
 
     private final String HEADER = "Experiment #, # Rows, TPS, TPS per thread,Total Time";
 
-    public Stats(int nThreads, int batchSize, int nTransactions){
+    public Stats(int nThreads, int batchSize, int nTransactions, int nExperiments){
         this.nThreads = nThreads;
         this.nTransactions = nTransactions;
         this.batchSize = batchSize;
+        this.nExperiments = nExperiments;
         sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         currentDate = new Date();
     }
@@ -48,6 +50,10 @@ public class Stats {
         PrintWriter pwc = null;
         try {
             pwc = new PrintWriter("POC" + fileName + ".csv");
+            pwc.println("Threads: " + nThreads);
+            pwc.println("Transactions: " + nTransactions);
+            pwc.println("Batch size: " + batchSize);
+            pwc.println("Experiments: " + nExperiments);
             pwc.println(HEADER);
             pwc.flush();
             int nRows = nTransactions * nThreads * batchSize;
