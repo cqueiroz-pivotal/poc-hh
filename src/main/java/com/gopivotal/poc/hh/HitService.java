@@ -35,4 +35,8 @@ public class HitService {
         long finalTime = System.currentTimeMillis();
         return (finalTime - startTime);
     }
+
+    public void shutdown(){
+        payloadDAO.closeConnection();
+    }
 }

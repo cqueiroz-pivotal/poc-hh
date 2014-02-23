@@ -28,6 +28,16 @@ public class JdbcPayloadDAO implements PayloadDAO {
     }
 
 
+    public void closeConnection(){
+        if(conn!=null){
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                LOG.error(">>>>>>Error closing connection<<<<<", e);
+            }
+        }
+    }
+
 
     @Override
     public void insert(Payload payload) {
