@@ -12,6 +12,12 @@
         <spring.version>4.0.2.RELEASE</spring.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.springsource.org/libs-milestone/</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
