@@ -74,6 +74,7 @@ public class HHExp {
 
             executorService.shutdown();
             executorService.awaitTermination(60, TimeUnit.SECONDS);
+
             finalTime = System.currentTimeMillis();
             long totalTime = finalTime - initTime;
             LOG.info("Finished experiment: " + id);

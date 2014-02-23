@@ -68,6 +68,13 @@ public class HHApp {
         for(int i = 0 ; i < nExperiments; i++){
             HHExp exp = new HHExp(i+1,nThreads,nTransactions,batchSize);
             long time = exp.execute();
+            try {
+                LOG.info("Sleeping for 5s");
+                Thread.currentThread().sleep(5000);
+
+            } catch (InterruptedException e) {
+                LOG.error("error waiting thread",e);
+            }
             stats.addMeasurement(i+1,time);
         }
 
