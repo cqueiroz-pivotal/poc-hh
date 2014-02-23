@@ -2,8 +2,12 @@ package com.gopivotal.poc.hh;
 
 
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,7 +28,7 @@ public class HHExp {
 
     private final int id;
 
-
+    ApplicationContext context;
     /**
      *
      * @param nThreads
@@ -36,9 +40,11 @@ public class HHExp {
         this.nTransactions = nTransactions;
         this.batchSize = batchSize;
         this.id = id;
+        context = new ClassPathXmlApplicationContext("spring-config.xml");
+
     }
 
-    public long execute(final HitService hitService){
+    public long execute(){
 
         long initTime = System.currentTimeMillis();
         LOG.info("Started experiment: " + id);
@@ -48,6 +54,7 @@ public class HHExp {
 
             for(int i = 0; i < nThreads ; i++){
                 executorService.execute(new Runnable() {
+                    final HitService hitService = context.getBean(HitService.class);
                     long actualTime = 0;
                     @Override
                     public void run() {

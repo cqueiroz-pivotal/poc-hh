@@ -20,9 +20,6 @@ public class HHApp {
     public static void main(String[] args) throws ArgumentParserException {
 
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-        final HitService hitService = context.getBean(HitService.class);
-
         ArgumentParser parser = ArgumentParsers.newArgumentParser("HHApp").description("Hit a DB to test throughput");
         parser.addArgument("-t")
                 .dest("nThreads")
@@ -70,7 +67,7 @@ public class HHApp {
 
         for(int i = 0 ; i < nExperiments; i++){
             HHExp exp = new HHExp(i+1,nThreads,nTransactions,batchSize);
-            long time = exp.execute(hitService);
+            long time = exp.execute();
             stats.addMeasurement(i+1,time);
         }
 

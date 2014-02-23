@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -13,23 +14,27 @@ import java.sql.SQLException;
 /**
  * Created by queirc on 2/21/14.
  */
-@Component
+
 public class JdbcPayloadDAO implements PayloadDAO {
 
     private final Logger LOG = LoggerFactory.getLogger(JdbcPayloadDAO.class);
 
     private final String SQL = "INSERT INTO app.erd_data values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    @Autowired
-    private HikariDataSource ds;
+    private Connection conn = null;
+
+    public void setConnection(Connection conn){
+        this.conn = conn;
+    }
+
 
 
     @Override
     public void insert(Payload payload) {
-        Connection conn = null;
+
         PreparedStatement pstm = null;
+
         try{
-            conn = ds.getConnection();
             conn.setAutoCommit(true);
             pstm = conn.prepareStatement(SQL);
             for (int j = 0; j < payload.data().length; j++) {
@@ -56,13 +61,7 @@ public class JdbcPayloadDAO implements PayloadDAO {
                     //NOTHING TO DO
                 }
             }
-            if(conn!=null){
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    LOG.error(">>>>>>Error closing connection<<<<<", e);
-                }
-            }
+
         }
 
         LOG.debug("single payload inserted.",this);
@@ -71,11 +70,11 @@ public class JdbcPayloadDAO implements PayloadDAO {
     @Override
     public void insertBatch(Payload[] payloads) {
 
-        Connection conn = null;
+
         PreparedStatement pstm = null;
 
         try{
-            conn = ds.getConnection();
+//            conn = ds.getConnection();
             conn.setAutoCommit(false);
             pstm = conn.prepareStatement(SQL);
             for(int i = 0; i < payloads.length;i++){
