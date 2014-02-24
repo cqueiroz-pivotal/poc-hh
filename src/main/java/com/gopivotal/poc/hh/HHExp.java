@@ -38,10 +38,15 @@ class HHExp {
         this.nTransactions = nTransactions;
         this.batchSize = batchSize;
         this.id = id;
+        //TODO need to remove it from here. 
         context = new ClassPathXmlApplicationContext("spring-config.xml");
 
     }
 
+    /**
+     * Runs the experiment.
+     * @return total time elapsed to run experiment.
+     */
     public long execute(){
 
         long initTime = System.currentTimeMillis();

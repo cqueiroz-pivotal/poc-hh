@@ -8,12 +8,12 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * @author cax
+ */
 class HHApp {
 
     private final static  Logger LOG = LoggerFactory.getLogger(HHApp.class);
-
-
 
 
     public static void main(String[] args) throws ArgumentParserException {
