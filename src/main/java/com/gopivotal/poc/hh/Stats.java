@@ -2,7 +2,6 @@ package com.gopivotal.poc.hh;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 /**
  * Created by queirc on 2/21/14.
  */
-public class Stats {
+class Stats {
 
     private final Logger LOG = LoggerFactory.getLogger(Stats.class);
 
@@ -29,8 +28,6 @@ public class Stats {
     private final SimpleDateFormat sdf;
 
     private final Date currentDate;
-
-    private final String HEADER = "Experiment #, # Rows, TPS, TPS per thread,Total Time";
 
     public Stats(int nThreads, int batchSize, int nTransactions, int nExperiments){
         this.nThreads = nThreads;
@@ -54,6 +51,7 @@ public class Stats {
             pwc.println("Transactions: " + nTransactions);
             pwc.println("Batch size: " + batchSize);
             pwc.println("Experiments: " + nExperiments);
+            String HEADER = "Experiment #, # Rows, TPS, TPS per thread,Total Time";
             pwc.println(HEADER);
             pwc.flush();
             int nRows = nTransactions * nThreads * batchSize;
@@ -85,11 +83,6 @@ public class Stats {
                 pwc.close();
             }
         }
-    }
-
-    public String compute(int id){
-//        Assert.;
-        return null;
     }
 
 

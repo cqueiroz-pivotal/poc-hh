@@ -3,6 +3,7 @@ package com.gopivotal.poc.hh;
 import com.gopivotal.poc.hh.dao.JdbcPayloadDAO;
 import com.gopivotal.poc.hh.dao.Payload;
 
+import com.gopivotal.poc.hh.dao.PayloadDAO;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -13,18 +14,16 @@ import java.sql.SQLException;
 
 @Component
 @Scope("prototype")
-public class HitService {
+class HitService {
 
     @Autowired
     private HikariDataSource ds;
 
-    private JdbcPayloadDAO payloadDAO;
-
+    private PayloadDAO payloadDAO;
 
     @PostConstruct
     private void setDAO() throws SQLException{
-        this.payloadDAO = new JdbcPayloadDAO();
-        this.payloadDAO.setConnection(ds.getConnection());
+        this.payloadDAO = new JdbcPayloadDAO(ds.getConnection());
     }
 
     public long hit(int batchSize) {

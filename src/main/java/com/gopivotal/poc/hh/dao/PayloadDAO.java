@@ -6,10 +6,17 @@ package com.gopivotal.poc.hh.dao;
 public interface PayloadDAO {
 
     /**
-     *
-     * @param payload
+     * Close connection.
      */
-    public void insert(Payload payload);
+    public void closeConnection();
+
+// --Commented out by Inspection START (2/25/14, 7:25 AM):
+//    /**
+//     *
+//     * @param payload
+//     */
+//    public void insert(Payload payload);
+// --Commented out by Inspection STOP (2/25/14, 7:25 AM)
 
     /**
      *

@@ -7,15 +7,14 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
-
-
-public class HHApp {
+class HHApp {
 
     private final static  Logger LOG = LoggerFactory.getLogger(HHApp.class);
+
+
+
 
     public static void main(String[] args) throws ArgumentParserException {
 
@@ -26,7 +25,7 @@ public class HHApp {
                 .nargs("?")
                 .type(Integer.class)
                 .setDefault(10)
-                .help("Spaw multiple threads to send data to the DB - Default: 10 threads");
+                .help("Spawn multiple threads to send data to the DB - Default: 10 threads");
 
         parser.addArgument("-b")
                 .dest("batchSize")
@@ -56,6 +55,8 @@ public class HHApp {
         final int batchSize = parser.parseArgs(args).getInt("batchSize");
         final int nExperiments = parser.parseArgs(args).getInt("nExperiments");
 
+
+
         LOG.info("Initialising experiments with the following config:");
         LOG.info("Threads: " + nThreads);
         LOG.info("Transactions: " + nTransactions);
@@ -70,13 +71,14 @@ public class HHApp {
             long time = exp.execute();
             try {
                 LOG.info("Sleeping for 5s");
-                Thread.currentThread().sleep(5000);
+                Thread.sleep(5000);
 
             } catch (InterruptedException e) {
                 LOG.error("error waiting thread",e);
             }
             stats.addMeasurement(i+1,time);
         }
+
 
         stats.computeAndSave();
 

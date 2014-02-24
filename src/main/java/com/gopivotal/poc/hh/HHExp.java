@@ -2,10 +2,8 @@ package com.gopivotal.poc.hh;
 
 
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,9 +12,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by queirc on 2/21/14.
+ * Created by cax on 2/21/14.
  */
-public class HHExp {
+class HHExp {
 
     private final Logger LOG = LoggerFactory.getLogger(HHExp.class);
 
@@ -28,7 +26,7 @@ public class HHExp {
 
     private final int id;
 
-    ApplicationContext context;
+    private final ApplicationContext context;
     /**
      *
      * @param nThreads
@@ -56,6 +54,7 @@ public class HHExp {
                 executorService.execute(new Runnable() {
                     final HitService hitService = context.getBean(HitService.class);
                     long actualTime = 0;
+
                     @Override
                     public void run() {
 
@@ -66,8 +65,6 @@ public class HHExp {
                         hitService.shutdown();
 
                     }
-
-
 
                 });
             }
