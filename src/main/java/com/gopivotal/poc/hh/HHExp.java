@@ -39,8 +39,6 @@ class HHExp {
         this.batchSize = batchSize;
         this.id = id;
         this.context = context;
-        //TODO need to remove it from here.
-
 
     }
 

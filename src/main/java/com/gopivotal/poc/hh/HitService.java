@@ -24,11 +24,6 @@ class HitService {
     @Autowired
     private PayloadDAO payloadDAO;
 
-//    @PostConstruct
-//    private void setDAO() throws SQLException{
-//        this.payloadDAO = new JdbcPayloadDAO(ds);
-//    }
-
     public long hit(int batchSize) {
 
         long startTime = System.currentTimeMillis();
