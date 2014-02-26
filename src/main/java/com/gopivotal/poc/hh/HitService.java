@@ -19,6 +19,7 @@ import java.sql.SQLException;
 class HitService {
 
     private final Logger LOG = LoggerFactory.getLogger(HitService.class);
+
     @Autowired
     private HikariDataSource ds;
 

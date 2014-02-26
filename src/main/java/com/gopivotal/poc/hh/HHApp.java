@@ -7,6 +7,8 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author cax
@@ -18,7 +20,7 @@ class HHApp {
 
     public static void main(String[] args) throws ArgumentParserException {
 
-
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
         ArgumentParser parser = ArgumentParsers.newArgumentParser("HHApp").description("Hit a DB to test throughput");
         parser.addArgument("-t")
                 .dest("nThreads")
@@ -67,7 +69,7 @@ class HHApp {
 
 
         for(int i = 0 ; i < nExperiments; i++){
-            HHExp exp = new HHExp(i+1,nThreads,nTransactions,batchSize);
+            HHExp exp = new HHExp(i+1,nThreads,nTransactions,batchSize,context);
             long time = exp.execute();
             try {
                 LOG.info("Sleeping for 5s");

@@ -33,13 +33,14 @@ class HHExp {
      * @param nTransactions
      * @param batchSize
      */
-    public HHExp(int id,  int nThreads, int nTransactions, int batchSize){
+    public HHExp(int id,  int nThreads, int nTransactions, int batchSize, ApplicationContext context){
         this.nThreads = nThreads;
         this.nTransactions = nTransactions;
         this.batchSize = batchSize;
         this.id = id;
+        this.context = context;
         //TODO need to remove it from here.
-        context = new ClassPathXmlApplicationContext("spring-config.xml");
+
 
     }
 
