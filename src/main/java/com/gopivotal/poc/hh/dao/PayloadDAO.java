@@ -5,10 +5,6 @@ package com.gopivotal.poc.hh.dao;
  */
 public interface PayloadDAO {
 
-    /**
-     * Close connection.
-     */
-    public void closeConnection();
 
 // --Commented out by Inspection START (2/25/14, 7:25 AM):
 //    /**

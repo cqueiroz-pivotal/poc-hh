@@ -12,8 +12,8 @@
 
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-        <property name="maximumPoolSize" value="1000" />
-        <property name="minimumPoolSize" value="50" />
+        <property name="maximumPoolSize" value="200" />
+        <property name="minimumPoolSize" value="10" />
         <property name="dataSourceClassName" value="com.vmware.sqlfire.internal.jdbc.ClientDataSource" />
         <property name="poolName" value="hikariCP" />
         <property name="dataSourceProperties" ref="props" />

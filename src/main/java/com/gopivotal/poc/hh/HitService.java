@@ -20,15 +20,14 @@ class HitService {
 
     private final Logger LOG = LoggerFactory.getLogger(HitService.class);
 
-    @Autowired
-    private HikariDataSource ds;
 
+    @Autowired
     private PayloadDAO payloadDAO;
 
-    @PostConstruct
-    private void setDAO() throws SQLException{
-        this.payloadDAO = new JdbcPayloadDAO(ds.getConnection());
-    }
+//    @PostConstruct
+//    private void setDAO() throws SQLException{
+//        this.payloadDAO = new JdbcPayloadDAO(ds);
+//    }
 
     public long hit(int batchSize) {
 
@@ -39,18 +38,5 @@ class HitService {
         return (finalTime - startTime);
     }
 
-    /**
-     * Closes current connection used by JdbcPayload
-     */
-    public void closeConnection(){
-        payloadDAO.closeConnection();
 
-    }
-
-    /**
-     * Shuts down database pool.
-     */
-    public void shutdown(){
-        ds.shutdown();
-    }
 }

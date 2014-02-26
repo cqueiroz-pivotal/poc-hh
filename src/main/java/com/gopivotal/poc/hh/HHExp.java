@@ -68,7 +68,6 @@ class HHExp {
                             long processingTime = hitService.hit(batchSize);
                             actualTime += processingTime;
                         }
-                        hitService.closeConnection();
 
                     }
 
