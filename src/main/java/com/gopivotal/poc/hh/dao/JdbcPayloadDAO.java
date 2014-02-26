@@ -118,8 +118,6 @@ public class JdbcPayloadDAO implements PayloadDAO {
 
         }
 
-        LOG.debug("batch inserted.",this);
-
     }
 
 

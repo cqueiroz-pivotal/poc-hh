@@ -5,6 +5,8 @@ import com.gopivotal.poc.hh.dao.Payload;
 
 import com.gopivotal.poc.hh.dao.PayloadDAO;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,7 @@ import java.sql.SQLException;
 @Scope("prototype")
 class HitService {
 
+    private final Logger LOG = LoggerFactory.getLogger(HitService.class);
     @Autowired
     private HikariDataSource ds;
 
@@ -35,7 +38,18 @@ class HitService {
         return (finalTime - startTime);
     }
 
-    public void shutdown(){
+    /**
+     * Closes current connection used by JdbcPayload
+     */
+    public void closeConnection(){
         payloadDAO.closeConnection();
+
+    }
+
+    /**
+     * Shuts down database pool.
+     */
+    public void shutdown(){
+        ds.shutdown();
     }
 }

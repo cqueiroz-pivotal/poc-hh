@@ -38,7 +38,7 @@ class HHExp {
         this.nTransactions = nTransactions;
         this.batchSize = batchSize;
         this.id = id;
-        //TODO need to remove it from here. 
+        //TODO need to remove it from here.
         context = new ClassPathXmlApplicationContext("spring-config.xml");
 
     }
@@ -67,7 +67,7 @@ class HHExp {
                             long processingTime = hitService.hit(batchSize);
                             actualTime += processingTime;
                         }
-                        hitService.shutdown();
+                        hitService.closeConnection();
 
                     }
 
@@ -75,10 +75,12 @@ class HHExp {
             }
 
             executorService.shutdown();
-            executorService.awaitTermination(60, TimeUnit.SECONDS);
+            executorService.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
+
 
             finalTime = System.currentTimeMillis();
             long totalTime = finalTime - initTime;
+            LOG.debug("Time to finish Exp: " + totalTime);
             LOG.info("Finished experiment: " + id);
             LOG.info("TPS: " + (nThreads * nTransactions * batchSize/(totalTime /1000.0f)));
 

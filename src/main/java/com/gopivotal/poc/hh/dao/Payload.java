@@ -4,10 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+
 import java.sql.Timestamp;
+import java.util.Random;
 import java.util.UUID;
+
+
 
 /**
  * Created by queirc on 2/21/14.
@@ -18,27 +20,23 @@ public class Payload {
 
     private final Object[] data;
 
-    private Payload(int i){
+    private final static Random random = new Random(System.currentTimeMillis());
+
+
+
+
+    private Payload(int i) {
 
         this.data = generateValues(i);
     }
 
     private Object[] generateValues(int i) {
-        try {
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-            random.setSeed(i + System.nanoTime());
+
             String key = UUID.randomUUID().toString();
             return new Object[]{new Timestamp(System.currentTimeMillis()), key, "a1234567891234567890", "b1234567891234567890",
                     "c123456789", "d123456789", "e123456789", Math.abs(random.nextInt()),
                     Math.abs(random.nextInt()), Math.abs(random.nextInt()),
                     Math.abs(random.nextInt()), Math.abs(random.nextInt())};
-
-
-        } catch (NoSuchAlgorithmException e) {
-            LOG.error("Error getting random generator");
-        }
-        throw new RuntimeException("Failed to generate values!!!!");
-
 
 
     }
@@ -53,6 +51,7 @@ public class Payload {
      * @return
      */
     public static Payload[] generatePayloads(int howMany){
+
         Assert.isTrue(howMany>0);
         Payload[] payloads = new Payload[howMany];
         for(int i = 0 ; i < howMany; i ++){
