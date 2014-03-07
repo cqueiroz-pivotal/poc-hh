@@ -12,12 +12,12 @@
         <spring.version>4.0.2.RELEASE</spring.version>
     </properties>
 
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>spring-milestones</id>-->
-            <!--<url>http://repo.springsource.org/libs-milestone/</url>-->
-        <!--</repository>-->
-    <!--</repositories>-->
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.springsource.org/libs-milestone/</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -83,9 +83,9 @@
         <!--<version>1.7.6</version>-->
         <!--</dependency>-->
         <dependency>
-            <groupId>com.gopivotal.gemfirexd</groupId>
-            <artifactId>gemfirexd</artifactId>
-            <version>0.5</version>
+            <groupId>com.vmware.sqlfire</groupId>
+            <artifactId>sqlfireclient</artifactId>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.argparse4j</groupId>
