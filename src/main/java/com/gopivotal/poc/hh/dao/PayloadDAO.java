@@ -20,5 +20,7 @@ public interface PayloadDAO {
      */
     public void insertBatch(Payload[] payloads);
 
+    public void insertBiggerBatch(NPayload[] payloads);
+
 
 }

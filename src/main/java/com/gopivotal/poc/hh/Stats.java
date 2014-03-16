@@ -28,12 +28,15 @@ class Stats {
     private final SimpleDateFormat sdf;
 
     private final Date currentDate;
+    private final int workload;
 
-    public Stats(int nThreads, int batchSize, int nTransactions, int nExperiments){
-        this.nThreads = nThreads;
-        this.nTransactions = nTransactions;
-        this.batchSize = batchSize;
-        this.nExperiments = nExperiments;
+
+    public Stats(ExpConfig expConfig){
+        this.nThreads = expConfig.getnThreads();
+        this.nTransactions = expConfig.getnTransactions();
+        this.batchSize = expConfig.getBatchSize();
+        this.nExperiments = expConfig.getExpId();
+        this.workload = expConfig.getWorkloadType();
         sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         currentDate = new Date();
     }
@@ -50,6 +53,7 @@ class Stats {
             pwc.println("Threads: " + nThreads);
             pwc.println("Transactions: " + nTransactions);
             pwc.println("Batch size: " + batchSize);
+            pwc.println("Workload type: " + workload);
             pwc.println("Experiments: " + nExperiments);
             String HEADER = "Experiment #, # Rows, TPS, TPS per thread,Total Time";
             pwc.println(HEADER);

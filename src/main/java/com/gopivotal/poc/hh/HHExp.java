@@ -27,17 +27,17 @@ class HHExp {
     private final int id;
 
     private final ApplicationContext context;
+
     /**
      *
-     * @param nThreads
-     * @param nTransactions
-     * @param batchSize
+     * @param expConfig
+     * @param context
      */
-    public HHExp(int id,  int nThreads, int nTransactions, int batchSize, ApplicationContext context){
-        this.nThreads = nThreads;
-        this.nTransactions = nTransactions;
-        this.batchSize = batchSize;
-        this.id = id;
+    public HHExp(ExpConfig expConfig, ApplicationContext context){
+        this.nThreads = expConfig.getnThreads();
+        this.nTransactions = expConfig.getnTransactions();
+        this.batchSize = expConfig.getBatchSize();
+        this.id = expConfig.getExpId();
         this.context = context;
 
     }
@@ -66,7 +66,7 @@ class HHExp {
                             long processingTime = hitService.hit(batchSize);
                             actualTime += processingTime;
                         }
-
+                        LOG.info("Thread TPS: " + (nTransactions * batchSize/(actualTime /1000.0f)));
                     }
 
                 });
@@ -81,6 +81,7 @@ class HHExp {
             LOG.debug("Time to finish Exp: " + totalTime);
             LOG.info("Finished experiment: " + id);
             LOG.info("TPS: " + (nThreads * nTransactions * batchSize/(totalTime /1000.0f)));
+
 
         }catch(Exception e){
             LOG.error("Error processing Experiment: " + id, e);

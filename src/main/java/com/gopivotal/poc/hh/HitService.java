@@ -1,6 +1,7 @@
 package com.gopivotal.poc.hh;
 
 import com.gopivotal.poc.hh.dao.JdbcPayloadDAO;
+import com.gopivotal.poc.hh.dao.NPayload;
 import com.gopivotal.poc.hh.dao.Payload;
 
 import com.gopivotal.poc.hh.dao.PayloadDAO;
@@ -26,12 +27,20 @@ class HitService {
 
     public long hit(int batchSize) {
 
-        long startTime = System.currentTimeMillis();
         Payload[] payloads = Payload.generatePayloads(batchSize);
+        long startTime = System.currentTimeMillis();
         payloadDAO.insertBatch(payloads);
         long finalTime = System.currentTimeMillis();
         return (finalTime - startTime);
     }
 
+    public long hitBig(int batchSize) {
+
+        NPayload[] payloads = NPayload.generatePayloads(batchSize);
+        long startTime = System.currentTimeMillis();
+        payloadDAO.insertBiggerBatch(payloads);
+        long finalTime = System.currentTimeMillis();
+        return (finalTime - startTime);
+    }
 
 }

@@ -43,6 +43,13 @@ class HHApp {
                 .setDefault(1000)
                 .help("Define number of operations/transactions with the DB (per thread) - Default: 1000");
 
+        parser.addArgument("-w")
+                .dest("nWorkload")
+                .nargs("?")
+                .type(Integer.class)
+                .setDefault(1)
+                .help("Define workload: 1 for small, 2 for big: Default - 1");
+
 
         parser.addArgument("-exp")
                 .dest("nExperiments")
@@ -56,20 +63,22 @@ class HHApp {
         final int nTransactions = parser.parseArgs(args).getInt("nTransactions");
         final int batchSize = parser.parseArgs(args).getInt("batchSize");
         final int nExperiments = parser.parseArgs(args).getInt("nExperiments");
-
+        final int nWorkload = parser.parseArgs(args).getInt("nWorkload");
 
 
         LOG.info("Initialising experiments with the following config:");
         LOG.info("Threads: " + nThreads);
         LOG.info("Transactions: " + nTransactions);
         LOG.info("Batch size: " + batchSize);
+        LOG.info("Workload type: " + nWorkload);
         LOG.info("Experiments: " + nExperiments);
 
-        final Stats stats = new Stats(nThreads,batchSize,nTransactions,nExperiments);
+        final Stats stats = new Stats(new ExpConfig(nExperiments,nThreads,batchSize,nTransactions,nWorkload));
 
 
         for(int i = 0 ; i < nExperiments; i++){
-            HHExp exp = new HHExp(i+1,nThreads,nTransactions,batchSize,context);
+            final ExpConfig expConfig = new ExpConfig(i+1,nThreads,batchSize,nTransactions,nWorkload);
+            HHExp exp = new HHExp(expConfig,context);
             long time = exp.execute();
             stats.addMeasurement(i+1,time);
         }

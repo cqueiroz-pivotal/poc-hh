@@ -56,15 +56,17 @@ public class NPayload {
     private Object[] generateValues() {
 
         String key = UUID.randomUUID().toString();
-        return new Object[]{new Timestamp(System.currentTimeMillis()), key, randomString(20), randomString(20),
-                randomString(10), randomString(10), randomString(10), Math.abs(random.nextInt()),
-                Math.abs(random.nextInt()), Math.abs(random.nextInt()),
-                Math.abs(random.nextInt()), Math.abs(random.nextInt())};
+        return new Object[]{randomString(20), randomString(50), randomString(20), Math.abs(random.nextInt()),
+                randomString(255), randomString(20), randomString(20), randomString(64),
+                randomString(255), Math.abs(random.nextInt()),
+                randomString(20), Math.abs(random.nextInt()),randomString(1),randomString(1), Math.abs(random.nextInt()),
+                Math.abs(random.nextInt()), Math.abs(random.nextInt()), new Timestamp(System.currentTimeMillis()),
+        randomString(255),randomString(255), Math.abs(random.nextInt()), Math.abs(random.nextInt()), Math.abs(random.nextInt())};
 
     }
 
     private String randomString(int size) {
-        return new BigInteger(130, random).toString(32).substring(0, size);
+        return new BigInteger(5000, random).toString(32).substring(0, size);
     }
 
     public Object[] data() {
