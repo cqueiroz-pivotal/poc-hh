@@ -7,7 +7,7 @@
         </encoder>
     </appender>
     <logger name="com.gopivotal.poc.hh">
-        <level value="FINE" />
+        <level value="DEBUG" />
     </logger>
 
     <logger name="com.zaxxer.hikari">

@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * Created by queirc on 2/21/14.
+ * Created by cax on 2/21/14.
  */
 class Stats {
 

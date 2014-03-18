@@ -7,6 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +32,8 @@ class HHExp {
 
     private final ApplicationContext context;
 
+    private PrintWriter pw;
+
     /**
      *
      * @param expConfig
@@ -39,6 +45,17 @@ class HHExp {
         this.batchSize = expConfig.getBatchSize();
         this.id = expConfig.getExpId();
         this.context = context;
+
+        try {
+            pw = new PrintWriter(Thread.currentThread().getName() + "_latency" + this.id + ".csv");
+            pw.println("Threads: " + nThreads);
+            pw.println("Transactions: " + nTransactions);
+            pw.println("Batch size: " + batchSize);
+            pw.flush();
+        } catch (FileNotFoundException e) {
+            LOG.error("error: file not found: latency.csv", e);
+            pw = null;
+        }
 
     }
 
@@ -53,7 +70,7 @@ class HHExp {
         long finalTime = 0;
         try{
             final ExecutorService executorService = Executors.newFixedThreadPool(nThreads);
-
+            final CountDownLatch cdl = new CountDownLatch(nThreads);
             for(int i = 0; i < nThreads ; i++){
                 executorService.execute(new Runnable() {
                     final HitService hitService = context.getBean(HitService.class);
@@ -62,9 +79,21 @@ class HHExp {
                     @Override
                     public void run() {
 
+                        cdl.countDown();
+
+                        try {
+                            cdl.await();
+                            LOG.debug("Thread " + Thread.currentThread().getName() + " started");
+                        } catch (InterruptedException e) {
+                            LOG.error("error: ",e);
+                        }
                         for(int i = 0 ; i < nTransactions ; i++){
                             long processingTime = hitService.hit(batchSize);
                             actualTime += processingTime;
+                            if(pw!=null) {
+                                pw.println(processingTime);
+                                pw.flush();
+                            }
                         }
                         LOG.info("Thread TPS: " + (nTransactions * batchSize/(actualTime /1000.0f)));
                     }
@@ -85,6 +114,9 @@ class HHExp {
 
         }catch(Exception e){
             LOG.error("Error processing Experiment: " + id, e);
+        }finally{
+            if(pw!=null)
+                pw.close();
         }
         return (finalTime - initTime);
     }

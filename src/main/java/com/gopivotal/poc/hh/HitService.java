@@ -32,6 +32,7 @@ class HitService {
         payloadDAO.insertBatch(payloads);
         long finalTime = System.currentTimeMillis();
         return (finalTime - startTime);
+
     }
 
     public long hitBig(int batchSize) {
@@ -41,6 +42,9 @@ class HitService {
         payloadDAO.insertBiggerBatch(payloads);
         long finalTime = System.currentTimeMillis();
         return (finalTime - startTime);
+
     }
+
+
 
 }

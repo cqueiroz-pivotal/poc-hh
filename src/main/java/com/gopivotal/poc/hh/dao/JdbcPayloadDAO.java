@@ -72,7 +72,7 @@ public class JdbcPayloadDAO implements PayloadDAO {
         Connection conn = null;
         try{
             conn = ds.getConnection();
-            conn.setAutoCommit(false);
+//            conn.setAutoCommit(false);
             String SQL = "INSERT INTO app.erd_data values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pstm = conn.prepareStatement(SQL);
             for (Payload payload : payloads) {
@@ -82,7 +82,7 @@ public class JdbcPayloadDAO implements PayloadDAO {
                 pstm.addBatch();
             }
             pstm.executeBatch();
-            conn.commit();
+//            conn.commit();
 
         }catch (SQLException e){
             try {
@@ -111,6 +111,7 @@ public class JdbcPayloadDAO implements PayloadDAO {
                     LOG.error("Error closing connection", e);
                 }
             }
+
 
         }
 
